@@ -10,11 +10,16 @@ NativeModules = React.NativeModules;
 
 SearchBar = React.createClass({
   propTypes: {
+    height: PropTypes.number,
     placeholder: PropTypes.string,
     text: PropTypes.string,
     barTintColor: PropTypes.string,
     tintColor: PropTypes.string,
     textFieldBackgroundColor: PropTypes.string,
+    textFieldStyle: PropTypes.shape({
+      backgroundColor: PropTypes.string.isRequired,
+      borderRadius: PropTypes.number,
+    }),
     showsCancelButton: PropTypes.bool,
     onChange: PropTypes.func,
     onChangeText: PropTypes.func,
@@ -48,7 +53,7 @@ SearchBar = React.createClass({
   },
   render: function() {
     return <RNSearchBar
-      style={{height: NativeModules.RNSearchBarManager.ComponentHeight}}
+      style={{height: this.props.height || NativeModules.RNSearchBarManager.ComponentHeight}}
       onChange={this._onChange}
       onPress={this._onPress}
       {...this.props}

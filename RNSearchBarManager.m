@@ -37,6 +37,29 @@ RCT_CUSTOM_VIEW_PROPERTY(hideBackground, BOOL, RNSearchBar)
     }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(textFieldStyle, UIImage, RNSearchBar)
+{
+    CGFloat height = [json[@"height"] floatValue];
+    CGFloat borderRadius = [json[@"borderRadius"] floatValue];
+    
+    // logic borrowed from http://stackoverflow.com/a/22266150/395989
+    CGSize size = CGSizeMake(height, height);
+    // create context with transparent background
+    UIGraphicsBeginImageContextWithOptions(size, NO, 1);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,0, size.width, size.height)
+                                cornerRadius:borderRadius] addClip];
+    [[RCTConvert UIColor:json[@"backgroundColor"]]  setFill];
+    
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [view setSearchFieldBackgroundImage:image forState:UIControlStateNormal];
+    [view setSearchTextPositionAdjustment:UIOffsetMake(8.0, 0.0)];
+}
+
 RCT_CUSTOM_VIEW_PROPERTY(textFieldBackgroundColor, UIColor, RNSearchBar)
 {
   if ([RCTConvert UIColor:json]) {
@@ -55,6 +78,7 @@ RCT_CUSTOM_VIEW_PROPERTY(textFieldBackgroundColor, UIColor, RNSearchBar)
     UIGraphicsEndImageContext();
 
     [view setSearchFieldBackgroundImage:image forState:UIControlStateNormal];
+    [view setSearchTextPositionAdjustment:UIOffsetMake(8.0, 0.0)];
   }
 }
 
