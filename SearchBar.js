@@ -1,12 +1,13 @@
 var NativeModules, PropTypes, RNSearchBar, React, SearchBar;
 
-React = require('react-native');
+React = require('react');
+ReactNative = require('react-native');
 
-RNSearchBar = React.requireNativeComponent('RNSearchBar', null);
+RNSearchBar = ReactNative.requireNativeComponent('RNSearchBar', null);
 
 PropTypes = React.PropTypes;
 
-NativeModules = React.NativeModules;
+NativeModules = ReactNative.NativeModules;
 
 SearchBar = React.createClass({
   propTypes: {
