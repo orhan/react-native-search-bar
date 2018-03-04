@@ -19,6 +19,7 @@ SearchBar = React.createClass({
     tintColor: PropTypes.string,
     textColor: PropTypes.string,
     textFieldBackgroundColor: PropTypes.string,
+    placeholderTextColor: PropTypes.string,
     textFieldStyle: PropTypes.shape({
       backgroundColor: PropTypes.string.isRequired,
       borderRadius: PropTypes.number,
@@ -36,6 +37,7 @@ SearchBar = React.createClass({
     searchBarStyle: PropTypes.oneOf(['default', 'prominent', 'minimal']),
     editable: PropTypes.bool
   },
+
   getDefaultProps: function() {
     return {
       barStyle: 'default',
@@ -43,6 +45,7 @@ SearchBar = React.createClass({
       editable: true
     };
   },
+
   _onChange: function(e) {
     var base, base1;
     if (typeof (base = this.props).onChange === "function") {
@@ -50,6 +53,7 @@ SearchBar = React.createClass({
     }
     return typeof (base1 = this.props).onChangeText === "function" ? base1.onChangeText(e.nativeEvent.text) : void 0;
   },
+
   _onPress: function(e) {
     var base, base1, button;
     button = e.nativeEvent.button;
@@ -59,22 +63,28 @@ SearchBar = React.createClass({
       return typeof (base1 = this.props).onCancelButtonPress === "function" ? base1.onCancelButtonPress() : void 0;
     }
   },
+
   blur: function() {
     return NativeModules.RNSearchBarManager.blur(ReactNative.findNodeHandle(this));
   },
+
   focus: function() {
     return NativeModules.RNSearchBarManager.focus(ReactNative.findNodeHandle(this));
   },
+
   unFocus: function() {
     return NativeModules.RNSearchBarManager.unFocus(ReactNative.findNodeHandle(this));
   },
+
   render: function() {
-    return <RNSearchBar
-      style={{height: this.props.height || NativeModules.RNSearchBarManager.ComponentHeight}}
-      onChange={this._onChange}
-      onPress={this._onPress}
-      {...this.props}
-    />;
+    return (
+      <RNSearchBar
+        style={{height: this.props.height || NativeModules.RNSearchBarManager.ComponentHeight}}
+        onChange={this._onChange}
+        onPress={this._onPress}
+        {...this.props}
+        />
+    );
   }
 });
 
